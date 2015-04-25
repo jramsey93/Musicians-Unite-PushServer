@@ -16,8 +16,8 @@ var msgCount = 0;
 var senderCount = 0;
 
 
-//messagesRef.on("child_added", newMessage);
-//tasksRef.on("child_added", newTask);
+messagesRef.on("child_added", newMessage);
+tasksRef.on("child_added", newTask);
 recordingsRef.on("child_added", newRecording);
 
 
@@ -29,7 +29,7 @@ function newRecording(recording) {
 		groupRef.once('value', function(group) {
 			var groupName = group.child('name').val();
 			var recordingName = recording.child('name').val();
-			var msgBody = 'New Task for ' + groupName + ': ' + recordingName;
+			var msgBody = 'New Recording for ' + groupName + ': ' + recordingName;
 			group.child('members').forEach( function(recipient) {
 				sendPushNotification(msgBody, recipient.key());
 			});
