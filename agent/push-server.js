@@ -22,10 +22,8 @@ recordingsRef.on("child_added", newRecording);
 
 
 function newRecording(recording) {
-	console.log(recording.child('group').val());
 	if (recording.child('group').val() != null) {
 		var groupRef = groupsRef.child(recording.child('group').val());
-		console.log(groupRef.toString());
 		groupRef.once('value', function(group) {
 			var groupName = group.child('name').val();
 			var recordingName = recording.child('name').val();
@@ -75,12 +73,14 @@ function sendPushNotification(body, recipientKey) {
 					var deviceToken = device.child('device_token').val();
 					var deviceType = device.child('device_type').val();
 					if (deviceType == 'iOS') {
-						console.log("Message: " + body + "\nRecipient: " + deviceType + " " + deviceToken + "\n");
+						//console.log("Message: " + body + "\nRecipient: " + deviceType + " " + deviceToken + "\n");
 						agent.createMessage()
 							.device(deviceToken)
 							.alert(body)
 							.sound('alert-sound.wav')
 							.send();
+					} else if (deviceType == 'Android') {
+
 					}
 				});
 			});
